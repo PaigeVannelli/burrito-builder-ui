@@ -10,10 +10,27 @@ class OrderForm extends Component {
     };
   }
 
+  handleNameChange = e => {
+    this.setState({ [e.target.name]: e.target.value })
+  }
 
   handleSubmit = e => {
     e.preventDefault();
+    console.log("submitted")
+    let newBurrito = {
+      key: Date.now(),
+      ...this.state,
+    }
+    // props.addOrder
     this.clearInputs();
+  }
+
+  validateOrder = e => {
+    if (this.state.name & this.state.ingredients) {
+      return true
+    } else {
+     return false 
+    }
   }
 
   clearInputs = () => {
@@ -44,7 +61,7 @@ class OrderForm extends Component {
 
         <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
 
-        <button onClick={e => this.handleSubmit(e)}>
+        <button disabled={!this.state.ingredients.length || !this.state.name} onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
       </form>
