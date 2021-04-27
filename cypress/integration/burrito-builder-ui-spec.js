@@ -23,8 +23,12 @@ describe('Page View', () => {
     .contains('Sam')
   })
 
+})
+
+describe('No Orders View', () => {
   it('should display no orders yet if there are no orders', () => {
     cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'emptyOrders'})
+    .visit('http://localhost:3000/')
     .get('[data-cy=no-orders]')
     .contains('No orders yet!')
   })
