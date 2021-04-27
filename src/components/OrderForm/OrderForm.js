@@ -16,7 +16,16 @@ class OrderForm extends Component {
   
   handleIngredientChange = e => {
     e.preventDefault()
-    let tempIngredients = [...this.state.ingredients, e.target.name]
+    let tempIngredients = this.state.ingredients
+    const numberOfIngredients = tempIngredients.reduce((count, ingredient) => {
+      if (ingredient === e.target.name) {
+        count++
+      }
+      return count
+    }, 0)
+    if (numberOfIngredients < 2) {
+      tempIngredients.push(e.target.name)
+    }
     this.setState({ ingredients: tempIngredients })
   }
 
