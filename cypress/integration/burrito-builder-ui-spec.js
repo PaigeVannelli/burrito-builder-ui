@@ -96,18 +96,4 @@ describe('Order Functionality', () => {
     .get('[data-cy=submit-order]')
     .should('be.disabled')
   })
-
-  // it('should display on order form with 12 ingredient options', () => {
-  //   cy.get('[data-cy=order-form]')
-  //   .children()
-  //   .should('have.length', 13)
-  // })
-
-  // it('should display all orders on page load', () => {
-  //   cy.get('[data-cy=all-orders]')
-  //   .children()
-  //   .should('have.length', 3)
-  //   .last()
-  //   .contains('Alex')
-  // })
 })
