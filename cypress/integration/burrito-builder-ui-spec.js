@@ -36,7 +36,7 @@ describe('Order Functionality', () => {
     .visit('http://localhost:3000/')
   })
 
-  it.only('should show the user what they have added to their order', () => {
+  it('should show the user what they have added to their order', () => {
     cy.get('[data-cy=name-input]')
     .type('Finley')
     .get('[data-cy=ingredients-button]')
@@ -52,7 +52,7 @@ describe('Order Functionality', () => {
     .contains('Order: beans, carnitas, pico de gallo')
   })
 
-  it.only('should show the user to submit their order', () => {
+  it('should show the user to submit their order', () => {
     cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'newOrder'})
     .intercept('http://localhost:3001/api/v1/orders', {fixture: 'newAllOrders'})
     .get('[data-cy=name-input]')
@@ -66,11 +66,35 @@ describe('Order Functionality', () => {
     .get('[data-cy=ingredients-button]')
     .eq(6)
     .click()
-    .get('[data-cy=ingredients-button]')
-    .eq(8)
-    .click()
     .get('[data-cy=submit-order]')
     .click()
+    .get('[data-cy=all-orders]')
+    .children()
+    .should('have.length', 3)
+    .last()
+    .contains('Finley')
+  })
+
+  it('should not allow the user to submit an order without a name', () => {
+    cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'newOrder'})
+    .intercept('http://localhost:3001/api/v1/orders', {fixture: 'newAllOrders'})
+    .get('[data-cy=ingredients-button]')
+    .eq(0)
+    .click()
+    .get('[data-cy=ingredients-button]')
+    .eq(2)
+    .click()
+    .get('[data-cy=submit-order]')
+    .should('be.disabled')
+  })
+
+  it('should not allow the user to submit an order without any ingredients', () => {
+    cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'newOrder'})
+    .intercept('http://localhost:3001/api/v1/orders', {fixture: 'newAllOrders'})
+    .get('[data-cy=name-input]')
+    .type('Finley')
+    .get('[data-cy=submit-order]')
+    .should('be.disabled')
   })
 
   // it('should display on order form with 12 ingredient options', () => {
