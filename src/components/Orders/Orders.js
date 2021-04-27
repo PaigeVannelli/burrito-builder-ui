@@ -16,7 +16,7 @@ const Orders = props => {
   });
 
   return (
-    <section>
+    <section data-cy='all-orders'>
       { orderEls.length ? orderEls : <p>No orders yet!</p> }
     </section>
   )

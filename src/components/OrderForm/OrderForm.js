@@ -47,15 +47,16 @@ class OrderForm extends Component {
     const possibleIngredients = ['beans', 'steak', 'carnitas', 'sofritas', 'lettuce', 'queso fresco', 'pico de gallo', 'hot sauce', 'guacamole', 'jalapenos', 'cilantro', 'sour cream'];
     const ingredientButtons = possibleIngredients.map(ingredient => {
       return (
-        <button key={ingredient} name={ingredient} onClick={e => this.handleIngredientChange(e)}>
+        <button data-cy='ingredients-button' key={ingredient} name={ingredient} onClick={e => this.handleIngredientChange(e)}>
           {ingredient}
         </button>
       )
     });
 
     return (
-      <form>
+      <form data-cy='order-form'>
         <input
+          data-cy='name-input'
           type='text'
           placeholder='Name'
           name='name'
@@ -65,9 +66,9 @@ class OrderForm extends Component {
 
         { ingredientButtons }
 
-        <p>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
+        <p data-cy='order-details'>Order: { this.state.ingredients.join(', ') || 'Nothing selected' }</p>
 
-        <button disabled={!this.state.ingredients.length || !this.state.name} onClick={e => this.handleSubmit(e)}>
+        <button data-cy='submit-order' disabled={!this.state.ingredients.length || !this.state.name} onClick={e => this.handleSubmit(e)}>
           Submit Order
         </button>
       </form>
