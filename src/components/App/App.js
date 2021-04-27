@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-import {getOrders, postOrder} from '../../apiCalls';
+import {getOrders, postOrder, deleteOrder} from '../../apiCalls';
 import Orders from '../../components/Orders/Orders';
 import OrderForm from '../../components/OrderForm/OrderForm';
 
@@ -24,8 +24,14 @@ class App extends Component {
 
   addOrder = (newOrder) => {
     postOrder(newOrder)
-    .then(() => this.getAllBurritos())
-    .catch(err => console.error('Error posting:', err));
+      .then(() => this.getAllBurritos())
+      .catch(err => console.error('Error posting:', err));
+  }
+  
+  completeOrder = (id) => {
+    deleteOrder(id)
+      .then(() => this.getAllBurritos())
+      .catch(err => console.error('Error posting:', err));
   }
 
 
@@ -37,7 +43,7 @@ class App extends Component {
           <OrderForm addOrder={this.addOrder} />
         </header>
 
-        <Orders orders={this.state.orders} />
+        <Orders orders={this.state.orders} completeOrder={this.completeOrder}/>
       </main>
     );
   }

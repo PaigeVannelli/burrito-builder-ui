@@ -10,3 +10,10 @@ export const postOrder = (newOrder) => {
     body: JSON.stringify(newOrder)
   })
 }
+
+export const deleteOrder = (id) => {
+  return fetch(`http://localhost:3001/api/v1/orders/${id}`, {
+    method: 'DELETE'
+  })
+}
+

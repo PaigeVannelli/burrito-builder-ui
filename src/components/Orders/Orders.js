@@ -11,6 +11,7 @@ const Orders = props => {
             return <li>{ingredient}</li>
           })}
         </ul>
+        <button onClick={() => props.completeOrder(order.id)}>Complete Order</button>
       </div>
     )
   });
