@@ -11,14 +11,14 @@ const Orders = props => {
             return <li>{ingredient}</li>
           })}
         </ul>
-        <button onClick={() => props.completeOrder(order.id)}>Complete Order</button>
+        <button data-cy='complete-button' onClick={() => props.completeOrder(order.id)}>Complete Order</button>
       </div>
     )
   });
 
   return (
     <section data-cy='all-orders'>
-      { orderEls.length ? orderEls : <p>No orders yet!</p> }
+      { orderEls.length ? orderEls : <p data-cy='no-orders'>No orders yet!</p> }
     </section>
   )
 }

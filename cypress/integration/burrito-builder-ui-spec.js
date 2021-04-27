@@ -15,18 +15,18 @@ describe('Page View', () => {
     .should('be.visible')
   })
 
-  // it('should display on order form with 12 ingredient options', () => {
-  //   cy.get('[data-cy=order-form]')
-  //   .children()
-  //   .should('have.length', 13)
-  // })
-
   it('should display all orders on page load', () => {
     cy.get('[data-cy=all-orders]')
     .children()
     .should('have.length', 2)
     .last()
     .contains('Sam')
+  })
+
+  it('should display no orders yet if there are no orders', () => {
+    cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'emptyOrders'})
+    .get('[data-cy=no-orders]')
+    .contains('No orders yet!')
   })
 })
 
@@ -95,5 +95,24 @@ describe('Order Functionality', () => {
     .type('Finley')
     .get('[data-cy=submit-order]')
     .should('be.disabled')
+  })
+})
+
+describe('Complete Order Functionality', () => {
+  beforeEach(() => {
+    cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'newAllOrders'})
+    .visit('http://localhost:3000/')
+  })
+  
+  it('should show the user to complete an order', () => {
+    cy.intercept('http://localhost:3001/api/v1/orders', {fixture: 'allOrders'})
+    .get('[data-cy=complete-button]')
+    .eq(2)
+    .click()
+    .get('[data-cy=all-orders]')
+    .children()
+    .should('have.length', 2)
+    .last()
+    .contains('Sam')
   })
 })
