@@ -11,17 +11,23 @@ class App extends Component {
       orders: [],
     }
   }
-
-  componentDidMount() {
+  
+  getAllBurritos = () => {
     getOrders()
       .then(orders => this.setState({ orders: orders.orders }))
       .catch(err => console.error('Error fetching:', err));
   }
 
-  addOrder(newOrder) {
-    postOrder(newOrder)
-    getOrders()
+  componentDidMount() {
+    this.getAllBurritos()
   }
+
+  addOrder = (newOrder) => {
+    postOrder(newOrder)
+    .then(() => this.getAllBurritos())
+    .catch(err => console.error('Error posting:', err));
+  }
+
 
   render() {
     return (
